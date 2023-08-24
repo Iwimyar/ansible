@@ -1,1 +1,1 @@
-# ansible
+For educational purposes.
