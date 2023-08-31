@@ -3,6 +3,6 @@
   tasks:
     
     - name: update the apt package index
-      apt: 
+      tags: always
+      package: 
         update_cache: yes
-      when: ansible_distribution in ['Debian', 'Ubuntu']
