@@ -1,0 +1,8 @@
+- hosts: all
+  become: true
+  tasks:
+    
+    - name: update the apt package index
+      tags: always
+      package: 
+        update_cache: yes
