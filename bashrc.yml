@@ -1,0 +1,12 @@
+- hosts: workstations
+  become: true
+  tasks:
+
+    - name: copy .bashrc file to home directory
+      ansible.builtin.copy:
+        src: additional_files/bashrc
+        dest: /home/waag/.bashrc
+        owner: waag
+        group: waag
+        mode: 0644
+      check_mode: true
