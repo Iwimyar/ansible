@@ -1,0 +1,20 @@
+---
+- name: create a user and a group with the same name
+  hosts: workstations
+  gather_facts: no
+  become: true
+  tasks:
+
+    - name: add a group
+      ansible.builtin.group:
+        name: waag
+
+    - name: add a user
+      ansible.builtin.user:
+        name: waag
+        groups:
+          - sudo
+          - waag
+          - users 
+        append: true
+        shell: /bin/bash 
