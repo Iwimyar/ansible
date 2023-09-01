@@ -1,0 +1,12 @@
+---
+- hosts: workstations
+  become: true
+  tasks:
+
+    - name: start a service
+      service:
+        name: cron
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+      
