@@ -1,0 +1,9 @@
+---
+- hosts: workstations
+  become: true
+  tasks:
+
+    - name: add authorized key
+      ansible.posix.authorized_key:
+        user: waag
+        key: "{{ lookup('file', '~/.ssh/ansible.pub') }}"
