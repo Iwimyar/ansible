@@ -1,5 +1,5 @@
 ---
-- hosts: workstations
+- hosts: all 
   become: true
   tasks:
 

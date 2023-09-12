@@ -1,4 +1,4 @@
-- hosts: workstations
+- hosts: all
   become: true
   tasks:
 
@@ -9,4 +9,3 @@
         owner: waag
         group: waag
         mode: 0644
-      check_mode: true

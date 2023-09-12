@@ -1,6 +1,6 @@
 ---
 - name: create a user and a group with the same name
-  hosts: workstations
+  hosts: all
   gather_facts: no
   become: true
   tasks:
