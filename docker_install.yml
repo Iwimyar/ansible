@@ -1,0 +1,56 @@
+- name: docker installation process
+  hosts: 192.168.52.133
+  become: true
+  vars:
+    - key_dir: /etc/apt/keyrings
+  tasks:
+
+    - name: uninstall conflicting packages
+      apt:
+        name:
+          - docker.io
+          - docker.compose
+          - docker-doc
+          - podman-docker
+        state: absent
+        update_cache: yes
+    
+    - name: install packages needed to add gpg key
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+
+    - name: create directory to store gpg key
+      ansible.builtin.file:
+        name: "{{ key_dir }}"
+        state: directory
+        mode: '0755'
+    
+    
+    - name: fetch gpg key from repo
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: "{{ key_dir }}/docker.asc"
+        mode: ug+rw
+
+    - name: add repo to apt sources
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by={{ key_dir }}/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable" 
+        filename: docker-repo
+        state: present
+        mode: '0644'
+        update_cache: yes
+
+
+    - name: install packages associated with docker (to run it)
+      apt: 
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
