@@ -1,0 +1,23 @@
+---
+- name: Providing configuration for a web server
+  hosts: nginx_enjoyer
+  become: true
+  tasks:
+
+    - name: update repo index && install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: start nginx service (?)
+      ansible.builtin.service:
+        name: nginx
+        enabled: true
+        state: restarted
+
+    - name: fetch nginx page with curl
+      get_url:
+        url: "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80"
+        dest: ~/curl_result
+        mode: a=rw 
